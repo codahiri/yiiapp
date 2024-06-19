@@ -10,7 +10,7 @@ class PersonController extends Controller
 {
   public function actionIndex()
   {
-    $person = Person::find()->one();
+    $person = Person::find()->asArray()->all();
     // $person->firstname = "G'ishmat";
     // $person->lastname = "Toshmatov";
     // $person->email = "toshmat@mail.uz";
@@ -18,6 +18,22 @@ class PersonController extends Controller
     // $person->gender = 'erkak';
     // $person->save();
     return $this->render('index', ['model' => $person]);
+  }
+
+  public function actionUpdate($id)
+  {
+
+    $model = Person::findOne($id);
+
+    $app = Yii::$app;
+    if ($app->request->isPost) {
+      $model->load($app->request->post());
+      if ($model->save()) {
+        return $this->redirect('index');
+      }
+    }
+
+    return $this->render('update', ['model' => $model]);
   }
 
   public function actionAdd()
