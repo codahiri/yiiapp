@@ -2,6 +2,7 @@
 
 // use yii\bootstrap4\LinkPager;
 use yii\grid\GridView;
+use yii\widgets\ListView;
 
 // echo $provider->sort->link('id') . ' | ' . $provider->sort->link('firstname') . ' | ' . $provider->sort->link('age');
 ?>
@@ -48,3 +49,10 @@ echo GridView::widget([
   //   'firstname'
   // ],
 ]);
+
+// echo ListView::widget([
+//   'dataProvider' => $provider,
+//   'pager' => [
+//     'class' => 'yii\bootstrap4\LinkPager'
+//   ],
+// ]);

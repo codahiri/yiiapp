@@ -5,27 +5,21 @@ namespace frontend\controllers;
 use Yii;
 use yii\web\Controller;
 use frontend\models\MyLogin;
+use frontend\models\Post;
+use yii\data\ActiveDataProvider;
 
 class PostController extends Controller
 {
   // list
   public function actionList()
   {
-    $model = new MyLogin();
-    $this->layout = 'MyLayout';
-    if (Yii::$app->request->isPost && $passwd = Yii::$app->request->post('password')) {
-      $model->load(Yii::$app->request->post());
-
-      $session = Yii::$app->session;
-      if ($model->validate()) {
-        $session->setFlash('success', "Ro'yxatdan o'tdi");
-        echo $session->getFlash('success');
-      } else {
-        $session->setFlash('danger', $model->getErrorSummary(false)[0]);
-        echo $session->getFlash('danger');
-      }
-    }
-    return $this->render('list', ['model' => $model]);
+    $provider = new ActiveDataProvider([
+      'query' => Post::find(),
+      'pagination' => [
+        'pageSize' => 5,
+      ],
+    ]);
+    return $this->render('list', ['provider' => $provider]);
   }
 
   // add
